@@ -1,0 +1,126 @@
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/ruby:2.5.0-node-browsers
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run:
+          name: submodule sync
+          command: |
+            git submodule sync
+            git submodule update --init
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v2-dependencies-{{ checksum "Gemfile.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v2-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v2-dependencies-{{ checksum "Gemfile.lock" }}
+
+      # Database setup
+      # - run: bundle exec rake db:create
+      # - run: bundle exec rake db:schema:load
+
+      - run:
+          name: install dynamodb-local
+          command: |
+            whoami > /tmp/whoami.txt
+
+            mkdir ~/dynamodb_local_latest
+            cd ~/dynamodb_local_latest
+            wget https://s3-us-west-2.amazonaws.com/dynamodb-local/dynamodb_local_latest.tar.gz
+            tar zxf dynamodb_local_latest.tar.gz
+            cat >~/dynamodb-local <<EOL
+            #!/bin/sh
+            exec java -Djava.library.path=~/dynamodb_local_latest/DynamoDBLocal_lib -jar ~/dynamodb_local_latest/DynamoDBLocal.jar -sharedDb
+            EOL
+
+            chmod a+x ~/dynamodb-local
+            sudo mv ~/dynamodb-local /usr/local/bin/dynamodb-local
+
+      - run:
+          name: start dynamodb-local
+          command: dynamodb-local
+          background: true
+
+      # run tests!
+      - run:
+          name: run tests
+          command: |
+            mkdir /tmp/test-results
+
+            cat >.rspec <<EOL
+            --format documentation
+            --exclude-pattern spec/fixtures/apps/**/*
+            --format RspecJunitFormatter \
+            --out /tmp/test-results/rspec.xml \
+            --require spec_helper
+            EOL
+
+            bundle exec rspec
+
+      # commit_docs.sh requires this
+      - run:
+          name: configure git
+          command: |
+            git config --global user.email "tongueroo@gmail.com"
+            git config --global user.name "Tung Nguyen"
+
+      - run:
+          name: commit cli reference docs
+          command: |
+            chmod a+x -R .circleci/bin
+            .circleci/bin/commit_docs.sh
+
+      - run:
+          name: install awscli
+          command: sudo apt-get update && sudo apt-get install -y awscli groff
+
+      - run:
+          name: configure awscli
+          command: |
+            mkdir ~/.aws
+
+            cat >~/.aws/config <<EOL
+            [default]
+            region = ${AWS_REGION}
+            output = json
+            EOL
+
+            cat >~/.aws/credentials <<EOL
+            [default]
+            aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
+            aws_access_key_id = ${AWS_ACCESS_KEY_ID}
+            EOL
+
+      # collect reports
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results

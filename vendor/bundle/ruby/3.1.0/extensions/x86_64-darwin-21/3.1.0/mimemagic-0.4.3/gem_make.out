@@ -1,0 +1,3 @@
+current directory: /Users/shu/Desktop/rails-projects/play_ruby_on_jets/vendor/bundle/ruby/3.1.0/gems/mimemagic-0.4.3/ext/mimemagic
+/Users/shu/.rbenv/versions/3.1.0/bin/ruby -I/Users/shu/.rbenv/versions/3.1.0/lib/ruby/3.1.0 -rrubygems /Users/shu/Desktop/rails-projects/play_ruby_on_jets/vendor/bundle/ruby/3.1.0/gems/rake-13.0.6/exe/rake RUBYARCHDIR\=/Users/shu/Desktop/rails-projects/play_ruby_on_jets/vendor/bundle/ruby/3.1.0/extensions/x86_64-darwin-21/3.1.0/mimemagic-0.4.3 RUBYLIBDIR\=/Users/shu/Desktop/rails-projects/play_ruby_on_jets/vendor/bundle/ruby/3.1.0/extensions/x86_64-darwin-21/3.1.0/mimemagic-0.4.3
+mkdir -p /Users/shu/Desktop/rails-projects/play_ruby_on_jets/vendor/bundle/ruby/3.1.0/extensions/x86_64-darwin-21/3.1.0/mimemagic-0.4.3/mimemagic

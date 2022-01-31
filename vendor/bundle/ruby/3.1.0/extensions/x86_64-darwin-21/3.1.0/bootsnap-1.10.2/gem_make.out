@@ -1,0 +1,15 @@
+current directory: /Users/shu/Desktop/rails-projects/play_ruby_on_jets/vendor/bundle/ruby/3.1.0/gems/bootsnap-1.10.2/ext/bootsnap
+/Users/shu/.rbenv/versions/3.1.0/bin/ruby -I /Users/shu/.rbenv/versions/3.1.0/lib/ruby/3.1.0 -r ./siteconf20220131-25233-twuxw9.rb extconf.rb
+creating Makefile
+
+current directory: /Users/shu/Desktop/rails-projects/play_ruby_on_jets/vendor/bundle/ruby/3.1.0/gems/bootsnap-1.10.2/ext/bootsnap
+make DESTDIR\= clean
+
+current directory: /Users/shu/Desktop/rails-projects/play_ruby_on_jets/vendor/bundle/ruby/3.1.0/gems/bootsnap-1.10.2/ext/bootsnap
+make DESTDIR\=
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.bundle
+
+current directory: /Users/shu/Desktop/rails-projects/play_ruby_on_jets/vendor/bundle/ruby/3.1.0/gems/bootsnap-1.10.2/ext/bootsnap
+make DESTDIR\= install
+/usr/local/bin/ginstall -c -m 0755 bootsnap.bundle ./.gem.20220131-25233-ztir0h/bootsnap

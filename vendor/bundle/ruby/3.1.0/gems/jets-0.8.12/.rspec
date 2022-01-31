@@ -1,0 +1,4 @@
+--color
+--exclude-pattern spec/fixtures/apps/**/*
+--format documentation
+--require spec_helper

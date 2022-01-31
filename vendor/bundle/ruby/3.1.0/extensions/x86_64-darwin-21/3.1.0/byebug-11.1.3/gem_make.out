@@ -1,0 +1,19 @@
+current directory: /Users/shu/Desktop/rails-projects/play_ruby_on_jets/vendor/bundle/ruby/3.1.0/gems/byebug-11.1.3/ext/byebug
+/Users/shu/.rbenv/versions/3.1.0/bin/ruby -I /Users/shu/.rbenv/versions/3.1.0/lib/ruby/3.1.0 -r ./siteconf20220131-25233-t45i7n.rb extconf.rb
+creating Makefile
+
+current directory: /Users/shu/Desktop/rails-projects/play_ruby_on_jets/vendor/bundle/ruby/3.1.0/gems/byebug-11.1.3/ext/byebug
+make DESTDIR\= clean
+
+current directory: /Users/shu/Desktop/rails-projects/play_ruby_on_jets/vendor/bundle/ruby/3.1.0/gems/byebug-11.1.3/ext/byebug
+make DESTDIR\=
+compiling breakpoint.c
+compiling byebug.c
+compiling context.c
+compiling locker.c
+compiling threads.c
+linking shared-object byebug/byebug.bundle
+
+current directory: /Users/shu/Desktop/rails-projects/play_ruby_on_jets/vendor/bundle/ruby/3.1.0/gems/byebug-11.1.3/ext/byebug
+make DESTDIR\= install
+/usr/local/bin/ginstall -c -m 0755 byebug.bundle ./.gem.20220131-25233-s5ekyg/byebug
